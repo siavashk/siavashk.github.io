@@ -3,10 +3,12 @@ permalink:           pretty
 
 # Setup
 title:               Siavash Khallaghi
-tagline:             Beyond Shallow Networks
-url:                 http://getpoole.com
+tagline:             Machine Learning, Computer Vision, Data Science,
+url:                 http://ece.ubc.ca/~siavashk
 paginate:            1
 baseurl:             ""
+
+pygments:            true
 
 # Assets
 #
@@ -27,7 +29,7 @@ author:
 # Custom vars
 version:             2.0.0
 github:
-  repo:              https://github.com/poole/poole
+  repo:              github.com/siavashk/siavashk.github.io
 
 # Gems
 gems:

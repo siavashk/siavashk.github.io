@@ -2,7 +2,7 @@
 permalink:           pretty
 
 # Setup
-title:               Machine Learning 102
+title:               Siavash Khallaghi
 tagline:             Beyond Shallow Networks
 url:                 http://getpoole.com
 paginate:            1
@@ -14,6 +14,9 @@ baseurl:             ""
 sass:
   sass_dir:          _sass
   style:            :compressed
+
+pages_list:
+  About: 'about'
 
 # About/contact
 author:

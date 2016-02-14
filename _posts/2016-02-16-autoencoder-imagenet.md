@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Training autoencoders on ImageNet
+title: Training Autoencoders on ImageNet
 comments: true
 ---
 

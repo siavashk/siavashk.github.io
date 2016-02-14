@@ -5,4 +5,4 @@ comments: true
 ---
 
 I have recently been working on a project for unsupervised feature extraction from natural images, such as the one below:
-![alt tag](https://github.com/siavashk/siavashk.github.io/master/assets/heidelberg.png)
+![alt tag](https://github.com/siavashk/siavashk.github.io/master/assets/heidelberg.jpg)

@@ -1,9 +1,10 @@
 # Permalinks
 permalink:           pretty
+markdown:            redcarpet
 
 # Setup
 title:               Siavash Khallaghi
-tagline:             Machine Learning, Computer Vision, Data Science,
+tagline:             Machine Learning, Computer Vision, Data Sciences
 url:                 http://ece.ubc.ca/~siavashk
 paginate:            1
 baseurl:             ""

@@ -6,7 +6,7 @@ comments: true
 *If you are just looking for code for a convolutional autoencoder in Torch, look at this git. There are only a few dependencies, and they have been listed in requirements.sh*
 
 ## Introduction
-\\[ \mathbf{X} = \mathbf{Z} \mathbf{P^\mathsf{T}} \\]
+$$a^2 + b^2 = c^2$$
 
 I have recently been working on a project for unsupervised feature extraction from natural images, such as the one below: <br />  
 ![Heidelberg, Germany](/assets/heidelberg.jpg "Heidelberg, Germany, October 1st, 2015")<br />  

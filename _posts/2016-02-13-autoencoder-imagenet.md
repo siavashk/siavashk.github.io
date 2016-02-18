@@ -29,4 +29,98 @@ The final layer of the encoder is a fully connected layer, which serves to aggre
 
 The decoder component of the autoencoder is shown in Figure 4, which is essentially mirrors the encoder in an expanding fashion. The output of the decoder is an approximation of the input.
 
-## Torch Implementation
+## Autoencoder Class
+We will first start by implementing a class to hold the network, which we will call autoencoder. Lua does not have a built in mechanism for classes, but it is possible to emulate the mechanism using [prototypes](http://www.lua.org/pil/16.1.html). We will define the autoencoder class and its constructor in the following manner:
+
+```
+autoencoder = {}
+autoencoder.__index = autoencoder
+
+setmetatable(autoencoder, {
+  __call = function (cls, ...)
+    return cls.new(...)
+  end,
+})
+
+function autoencoder.new()
+  local self = setmetatable({}, autoencoder)
+  return self
+end
+```
+Next, we will define a ```initialize()``` method. This method sets up the autoencoder with de/convolution, ReLU, un/pooling and linear blocks as described in the previous section. The ```initialize()``` method has the following structure:
+```
+function autoencoder:initialize()
+  self.net = nn.Sequential()
+  # network layers are defined here:
+  # layer 1
+  # layer 2 ...
+  # layer N
+  self.net = self.net:cuda()
+end
+```
+
+```nn.Sequential()``` defines a container for the network that behaves in a serial manner, i.e. the output of one block is the input to another. The layers are defined in the commented code block above, i.e. layers 1-N. The last line, i.e. ```self.net:cuda()``` copies the network to the GPU for faster training.
+
+Now that we have the structure in place, we can start adding layers. We assume that the input to our network are 64\\($\times$\\)64 RGB images. For this post, we will hard-code layer sizes, but it is possible to for layers to infer their size based on input and model parameters. For non-convoutional layers, computing sizes is trivial. For convolution layers, the relationship between the dimensionality of inputs and outputs is the following:
+```
+output = (input - kernel_size) / stride + 1
+```
+
+The first layer is convolutional. We will add it to the network using the following code snippet:
+```
+self.net:add(nn.SpatialConvolution(3, 12, 3, 3, 1, 1, 0, 0))
+```
+This defines a convolution layer that has 3 input channels, 12 output channels, a 3\\($\times$\\)3 kernel and a stride of 1. We will follow this layer with a ReLU element, which is simply a non-linear activation function:
+```
+self.net:add(nn.ReLU())
+```
+Fully connected layers are defined in the following manner:
+```
+self.net:add(nn.Linear(24 * 14 * 14, 1568))
+```
+Similarly, we can add a pooling layer that downsamples with a factor of 2\\($\times$\\):
+```
+local pool_layer1 = nn.SpatialMaxPooling(2, 2, 2, 2)
+self.net:add(pool_layer1)
+```
+Unpooling layers require the pooling mask. So, we can define them using this code snippet:
+```
+self.net:add(nn.SpatialMaxUnpooling(pool_layer2))
+```
+Finally, we are going to Connect all the layers in the ```initialize()``` method. This is shown in the following code snippet:
+```
+function autoencoder:initialize()
+  local pool_layer1 = nn.SpatialMaxPooling(2, 2, 2, 2)
+  local pool_layer2 = nn.SpatialMaxPooling(2, 2, 2, 2)
+
+  self.net = nn.Sequential()
+  self.net:add(nn.SpatialConvolution(3, 12, 3, 3, 1, 1, 0, 0))
+  self.net:add(nn.ReLU())
+  self.net:add(nn.SpatialConvolution(12, 12, 3, 3, 1, 1, 0, 0))
+  self.net:add(nn.ReLU())
+  self.net:add(pool_layer1)
+  self.net:add(nn.SpatialConvolution(12, 24, 3, 3, 1, 1, 0, 0))
+  self.net:add(nn.ReLU())
+  self.net:add(pool_layer2)
+  self.net:add(nn.Reshape(24 * 14 * 14))
+  self.net:add(nn.Linear(24 * 14 * 14, 1568))
+  self.net:add(nn.Linear(1568, 24 * 14 * 14))
+  self.net:add(nn.Reshape(24, 14, 14))
+  self.net:add(nn.SpatialConvolution(24, 12, 3, 3, 1, 1, 0, 0))
+  self.net:add(nn.ReLU())
+  self.net:add(nn.SpatialMaxUnpooling(pool_layer2))
+  self.net:add(nn.SpatialConvolution(12, 12, 3, 3, 1, 1, 0, 0))
+  self.net:add(nn.ReLU())
+  self.net:add(nn.SpatialMaxUnpooling(pool_layer1))
+  self.net:add(nn.SpatialConvolution(12, 3, 3, 3, 1, 1, 0, 0))
+
+  self.net = self.net:cuda()
+end
+```
+We will also add a utility printself() method to the class for debugging:
+```
+function autoencoder:printself()
+print(self.net)
+end
+```
+## Data Preparation

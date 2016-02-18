@@ -47,7 +47,8 @@ function autoencoder.new()
   return self
 end
 ```
-Next, we will define a ```initialize()``` method. This method sets up the autoencoder with de/convolution, ReLU, un/pooling and linear blocks as described in the previous section. The ```initialize()``` method has the following structure:
+Next, we will define a `initialize()` method. This method sets up the autoencoder with de/convolution, ReLU, un/pooling and linear blocks as described in the previous section. The `initialize()` method has the following structure:
+
 ```
 function autoencoder:initialize()
   self.net = nn.Sequential()
@@ -59,7 +60,7 @@ function autoencoder:initialize()
 end
 ```
 
-```nn.Sequential()``` defines a container for the network that behaves in a serial manner, i.e. the output of one block is the input to another. The layers are defined in the commented code block above, i.e. layers 1-N. The last line, i.e. ```self.net:cuda()``` copies the network to the GPU for faster training.
+`nn.Sequential()` defines a container for the network that behaves in a serial manner, i.e. the output of one block is the input to another. The layers are defined in the commented code block above, i.e. layers 1-N. The last line, i.e. `self.net:cuda()` copies the network to the GPU for faster training.
 
 Now that we have the structure in place, we can start adding layers. We assume that the input to our network are 64\\($\times$\\)64 RGB images. For this post, we will hard-code layer sizes, but it is possible to for layers to infer their size based on input and model parameters. For non-convoutional layers, computing sizes is trivial. For convolution layers, the relationship between the dimensionality of inputs and outputs is the following:
 ```
@@ -87,7 +88,7 @@ Unpooling layers require the pooling mask. So, we can define them using this cod
 ```
 self.net:add(nn.SpatialMaxUnpooling(pool_layer2))
 ```
-Finally, we are going to Connect all the layers in the ```initialize()``` method. This is shown in the following code snippet:
+Finally, we are going to Connect all the layers in the `initialize()` method. This is shown in the following code snippet:
 ```
 function autoencoder:initialize()
   local pool_layer1 = nn.SpatialMaxPooling(2, 2, 2, 2)

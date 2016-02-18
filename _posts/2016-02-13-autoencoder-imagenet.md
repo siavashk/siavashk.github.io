@@ -5,7 +5,7 @@ comments: true
 ---
 *If you are just looking for code for a convolutional autoencoder in Torch, look at this git. There are only a few dependencies, and they have been listed in requirements.sh*
 
-## Introduction
+# Introduction
 I have recently been working on a project for unsupervised feature extraction from natural images, such as Figure 1. <br />  
 ![Heidelberg, Germany](/assets/heidelberg.jpg "Figure 1: Heidelberg, Germany, October 1st, 2015")<br />  
 
@@ -13,7 +13,7 @@ I will save the motivation for a future post. One of the methods that I was expl
 
 To the best of my knowledge, there are no publicly available examples for writing autoencoders on color images. There are, however, several examples on how to write an autoencoder for the [MNIST](http://yann.lecun.com/exdb/mnist/) dataset. It might be trivial for seasoned machine learning scientists to extend the architecture from grayscale to color images, but for me it was non-trivial. The goal of this post is to provide a minimal example on how to train autoencoders on color images using Torch.
 
-## The Big Picture
+# The Big Picture
 ![Autoencoder overview](/assets/ae1.jpg "Figure 2: major components of an autoencoder")
 Figure 2. shows the major components of an autoencoder. The input in our case is a 2D image, denoted as \\(\mathrm{I}\\), which passes through an encoder block. The purpose of this block is to provide a latent representation of the input, denoted as \\(\mathrm{C}\\), which we will refer to as the code for the remainder of this post. This code is subsequently passed through a decoding block, denoted as \\(\hat{\mathrm{I}}\\), which generates an approximation of the input.
 
@@ -27,4 +27,4 @@ The final layer of the encoder is a fully connected layer, which serves to aggre
 
 ![Decoder overview](/assets/ae3.jpg "Figure 4: Decoder components in this post")
 
-The decoder component of the autoencoder is shown in Figure 4, which is essentially mirrors the encoder in an expanding fashion. The output of the decoder is an approximation of the input. 
+The decoder component of the autoencoder is shown in Figure 4, which is essentially mirrors the encoder in an expanding fashion. The output of the decoder is an approximation of the input.

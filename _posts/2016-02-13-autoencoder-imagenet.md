@@ -62,7 +62,7 @@ end
 
 `nn.Sequential()` defines a container for the network that behaves in a serial manner, i.e. the output of one block is the input to another. The layers are defined in the commented code block above, i.e. layers 1-N. The last line, i.e. `self.net:cuda()` copies the network to the GPU for faster training.
 
-Now that we have the structure in place, we can start adding layers. We assume that the input to our network are 64\\($\times$\\)64 RGB images. For this post, we will hard-code layer sizes, but it is possible to for layers to infer their size based on input and model parameters. For non-convoutional layers, computing sizes is trivial. For convolution layers, the relationship between the dimensionality of inputs and outputs is the following:
+Now that we have the structure in place, we can start adding layers. We assume that the input to our network are 64\\(\times\\)64 RGB images. For this post, we will hard-code layer sizes, but it is possible to for layers to infer their size based on input and model parameters. For non-convoutional layers, computing sizes is trivial. For convolution layers, the relationship between the dimensionality of inputs and outputs is the following:
 ```
 output = (input - kernel_size) / stride + 1
 ```

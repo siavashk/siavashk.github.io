@@ -135,7 +135,7 @@ We will also add a utility printself() method to the class for debugging:
 
 ```
 function autoencoder:printself()
-print(self.net)
+  print(self.net)
 end
 ```
 

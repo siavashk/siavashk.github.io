@@ -21,6 +21,6 @@ Figure 2. shows the major components of an autoencoder. The input in our case is
 
 Figure 3. shows the components of the encoder that is used throughout this post.
 
-# Figure X. shows the architecture of the autoencoder. The network has three convolution layers on the encoding side and three convolution layers on the decoding side. Each convolution layer has a rectifier linear unit as an activation function. On the encoding side, there are two max-pooling layers after the second and third convolution layers. These pooling layers are mirrored on the decoder side for symmetry.
+[comment]: <> (Figure X. shows the architecture of the autoencoder. The network has three convolution layers on the encoding side and three convolution layers on the decoding side. Each convolution layer has a rectifier linear unit as an activation function. On the encoding side, there are two max-pooling layers after the second and third convolution layers. These pooling layers are mirrored on the decoder side for symmetry.)
 
 There are also two linear (fully connected) layer in the autoencoder. On the encoder side, the first linear layer condenses the output of the final max-pooling layer to a small set of features. On the decoder side, the second linear layer expands the output of the first linear layer back to the same size as the max-pooling layer.

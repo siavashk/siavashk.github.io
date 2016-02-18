@@ -19,8 +19,6 @@ Figure 2. shows the major components of an autoencoder. The input in our case is
 
 ![Encoder overview](/assets/ae2.jpg "Figure 3: encoder components in this post")
 
-Figure 3. shows the components of the encoder that is used throughout this post.
-
-[comment]: <> (Figure X. shows the architecture of the autoencoder. The network has three convolution layers on the encoding side and three convolution layers on the decoding side. Each convolution layer has a rectifier linear unit as an activation function. On the encoding side, there are two max-pooling layers after the second and third convolution layers. These pooling layers are mirrored on the decoder side for symmetry.)
+Figure 3. shows the components of the encoder that is used throughout this post. Most of the computation is performed using the three convolution layers, i.e. \\(Conv_{1..3}\\). Without non-linear elements, encoding would be a linear dimensionality reduction similar to principal component analysis ([PCA](https://en.wikipedia.org/wiki/Principal_component_analysis)), since convolution is a linear operator. Since the space of images are not guaranteed to lie on a hyperplane, it is customary to add a non-linear element to the output of convolution layers, which in this example is a rectifier linear unit ([\\(ReLU\\)](https://en.wikipedia.org/wiki/Rectifier_%28neural_networks%29)).
 
 There are also two linear (fully connected) layer in the autoencoder. On the encoder side, the first linear layer condenses the output of the final max-pooling layer to a small set of features. On the decoder side, the second linear layer expands the output of the first linear layer back to the same size as the max-pooling layer.

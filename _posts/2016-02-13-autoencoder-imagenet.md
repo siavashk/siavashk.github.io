@@ -3,7 +3,7 @@ layout: post
 title: "Training Autoencoders on ImageNet Using Torch 7"
 comments: true
 ---
-*If you are just looking for code for a convolutional autoencoder in Torch, look at this git. There are only a few dependencies, and they have been listed in requirements.sh*
+*If you are just looking for code for a convolutional autoencoder in Torch, look at this [git](https://github.com/siavashk/imagenet-autoencoder.git). There are only a few dependencies, and they have been listed in requirements.sh*
 
 ## Introduction
 I have recently been working on a project for unsupervised feature extraction from natural images, such as Figure 1. <br />  
@@ -28,3 +28,5 @@ The final layer of the encoder is a fully connected layer, which serves to aggre
 ![Decoder overview](/assets/ae3.jpg "Figure 4: Decoder components in this post")
 
 The decoder component of the autoencoder is shown in Figure 4, which is essentially mirrors the encoder in an expanding fashion. The output of the decoder is an approximation of the input.
+
+## Torch Implementation

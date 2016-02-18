@@ -71,7 +71,7 @@ The first layer is convolutional. We will add it to the network using the follow
 ```
 self.net:add(nn.SpatialConvolution(3, 12, 3, 3, 1, 1, 0, 0))
 ```
-This defines a convolution layer that has 3 input channels, 12 output channels, a 3\\($\times$\\)3 kernel and a stride of 1. We will follow this layer with a ReLU element, which is simply a non-linear activation function:
+This defines a convolution layer that has 3 input channels, 12 output channels, a 3\\(\times\\)3 kernel and a stride of 1. We will follow this layer with a ReLU element, which is simply a non-linear activation function:
 ```
 self.net:add(nn.ReLU())
 ```
@@ -79,7 +79,7 @@ Fully connected layers are defined in the following manner:
 ```
 self.net:add(nn.Linear(24 * 14 * 14, 1568))
 ```
-Similarly, we can add a pooling layer that downsamples with a factor of 2\\($\times$\\):
+Similarly, we can add a pooling layer that downsamples with a factor of 2\\(\times\\):
 ```
 local pool_layer1 = nn.SpatialMaxPooling(2, 2, 2, 2)
 self.net:add(pool_layer1)

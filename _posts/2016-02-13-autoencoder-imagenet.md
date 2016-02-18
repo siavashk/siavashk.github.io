@@ -96,7 +96,7 @@ self.net:add(pool_layer1)
 Unpooling layers require the pooling mask. So, we can define them using this code snippet:
 
 ```
-self.net:add(nn.SpatialMaxUnpooling(pool_layer2))
+self.net:add(nn.SpatialMaxUnpooling(pool_layer1))
 ```
 
 Finally, we are going to Connect all the layers in the `initialize()` method. This is shown in the following code snippet:

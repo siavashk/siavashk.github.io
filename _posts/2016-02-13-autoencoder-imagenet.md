@@ -23,4 +23,8 @@ Figure 3. shows the components of the encoder that is used throughout this post.
 
 The encoder also has two max-pooling elements after the second and third convolution layers. Max-pooling can be thought of as a grid that summarizes activated neurons from the previous layer. It has been suggested that networks that do include pooling layers are [less likely to overfit](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf).
 
-The final layer of our autoencoder is a fully connected layer, which serves to aggregate the information from all the neurons in the previous layer. This layer is essentially a linear mapping of its input.
+The final layer of the encoder is a fully connected layer, which serves to aggregate the information from all the neurons in the previous layer. This layer is essentially a linear mapping of its input. The code is simply the output of this layer.
+
+![Decoder overview](/assets/ae3.jpg "Figure 4: Decoder components in this post")
+
+The decoder component of the autoencoder is shown in Figure 4, which is essentially mirrors the encoder in an expanding fashion. The output of the decoder is an approximation of the input. 

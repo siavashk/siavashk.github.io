@@ -63,32 +63,44 @@ end
 `nn.Sequential()` defines a container for the network that behaves in a serial manner, i.e. the output of one block is the input to another. The layers are defined in the commented code block above, i.e. layers 1-N. The last line, i.e. `self.net:cuda()` copies the network to the GPU for faster training.
 
 Now that we have the structure in place, we can start adding layers. We assume that the input to our network are 64\\(\times\\)64 RGB images. For this post, we will hard-code layer sizes, but it is possible to for layers to infer their size based on input and model parameters. For non-convoutional layers, computing sizes is trivial. For convolution layers, the relationship between the dimensionality of inputs and outputs is the following:
+
 ```
 output = (input - kernel_size) / stride + 1
 ```
 
 The first layer is convolutional. We will add it to the network using the following code snippet:
+
 ```
 self.net:add(nn.SpatialConvolution(3, 12, 3, 3, 1, 1, 0, 0))
 ```
+
 This defines a convolution layer that has 3 input channels, 12 output channels, a 3\\(\times\\)3 kernel and a stride of 1. We will follow this layer with a ReLU element, which is simply a non-linear activation function:
+
 ```
 self.net:add(nn.ReLU())
 ```
+
 Fully connected layers are defined in the following manner:
+
 ```
 self.net:add(nn.Linear(24 * 14 * 14, 1568))
 ```
+
 Similarly, we can add a pooling layer that downsamples with a factor of 2\\(\times\\):
+
 ```
 local pool_layer1 = nn.SpatialMaxPooling(2, 2, 2, 2)
 self.net:add(pool_layer1)
 ```
+
 Unpooling layers require the pooling mask. So, we can define them using this code snippet:
+
 ```
 self.net:add(nn.SpatialMaxUnpooling(pool_layer2))
 ```
+
 Finally, we are going to Connect all the layers in the `initialize()` method. This is shown in the following code snippet:
+
 ```
 function autoencoder:initialize()
   local pool_layer1 = nn.SpatialMaxPooling(2, 2, 2, 2)
@@ -118,10 +130,13 @@ function autoencoder:initialize()
   self.net = self.net:cuda()
 end
 ```
+
 We will also add a utility printself() method to the class for debugging:
+
 ```
 function autoencoder:printself()
 print(self.net)
 end
 ```
+
 ## Data Preparation

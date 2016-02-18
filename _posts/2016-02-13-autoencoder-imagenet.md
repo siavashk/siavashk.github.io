@@ -15,7 +15,7 @@ To the best of my knowledge, there are no publicly available examples for writin
 
 ## The Big Picture
 ![Autoencoder over view](/assets/ae1.jpg "Figure 2: Autoencoders are a generative model of their inputs")
-Figure 2. shows the major components of an autoencoder. The input in our case is a 2D image, denoted as \\(\mathrm{I}\\), which passes through an encoder block. The purpose of this block is to provide a latent representation of the input, denoted as \\(\mathrm{C}\\), which we will refer to as the code for the remainder of this post. This code is subsequently passed through a decoding block, denoted as \\(\hat{}\mathrm{I}}\\), which generates an approximation of the input.
+Figure 2. shows the major components of an autoencoder. The input in our case is a 2D image, denoted as \\(\mathrm{I}\\), which passes through an encoder block. The purpose of this block is to provide a latent representation of the input, denoted as \\(\mathrm{C}\\), which we will refer to as the code for the remainder of this post. This code is subsequently passed through a decoding block, denoted as \\(\hat{\mathrm{I}}\\), which generates an approximation of the input.
 
 Figure X. shows the architecture of the autoencoder. The network has three convolution layers on the encoding side and three convolution layers on the decoding side. Each convolution layer has a rectifier linear unit as an activation function. On the encoding side, there are two max-pooling layers after the second and third convolution layers. These pooling layers are mirrored on the decoder side for symmetry.
 

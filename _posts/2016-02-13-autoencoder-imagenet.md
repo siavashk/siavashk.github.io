@@ -14,9 +14,13 @@ I will save the motivation for a future post. One of the methods that I was expl
 To the best of my knowledge, there are no publicly available examples for writing autoencoders on color images. There are, however, several examples on how to write an autoencoder for the [MNIST](http://yann.lecun.com/exdb/mnist/) dataset. It might be trivial for seasoned machine learning scientists to extend the architecture from grayscale to color images, but for me it was non-trivial. The goal of this post is to provide a minimal example on how to train autoencoders on color images using Torch.
 
 ## The Big Picture
-![Autoencoder over view](/assets/ae1.jpg "Figure 2: Autoencoders are a generative model of their inputs")
+![Autoencoder overview](/assets/ae1.jpg "Figure 2: major components of an autoencoder")
 Figure 2. shows the major components of an autoencoder. The input in our case is a 2D image, denoted as \\(\mathrm{I}\\), which passes through an encoder block. The purpose of this block is to provide a latent representation of the input, denoted as \\(\mathrm{C}\\), which we will refer to as the code for the remainder of this post. This code is subsequently passed through a decoding block, denoted as \\(\hat{\mathrm{I}}\\), which generates an approximation of the input.
 
-Figure X. shows the architecture of the autoencoder. The network has three convolution layers on the encoding side and three convolution layers on the decoding side. Each convolution layer has a rectifier linear unit as an activation function. On the encoding side, there are two max-pooling layers after the second and third convolution layers. These pooling layers are mirrored on the decoder side for symmetry.
+![Encoder overview](/assets/ae2.jpg "Figure 3: encoder components in this post")
+
+Figure 3. shows the components of the encoder that is used throughout this post.
+
+# Figure X. shows the architecture of the autoencoder. The network has three convolution layers on the encoding side and three convolution layers on the decoding side. Each convolution layer has a rectifier linear unit as an activation function. On the encoding side, there are two max-pooling layers after the second and third convolution layers. These pooling layers are mirrored on the decoder side for symmetry.
 
 There are also two linear (fully connected) layer in the autoencoder. On the encoder side, the first linear layer condenses the output of the final max-pooling layer to a small set of features. On the decoder side, the second linear layer expands the output of the first linear layer back to the same size as the max-pooling layer.

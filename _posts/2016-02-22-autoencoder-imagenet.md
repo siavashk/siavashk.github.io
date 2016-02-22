@@ -174,7 +174,7 @@ for t=1, options.epochs do
 end
 ```
 
-## Testing and Results
+## Testing
 
 Once the training is finished, we can pass images from the validation set through the autoencoder in forward mode. If the output matches the input, the autoencoder has been successfully trained. The testing script is provided under `scripts/test.lua`. To run it in the root folder with default parameters simply call:
 

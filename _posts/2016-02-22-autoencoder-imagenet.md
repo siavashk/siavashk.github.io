@@ -11,10 +11,11 @@ I have recently been working on a project for unsupervised feature extraction fr
 
 I will save the motivation for a future post. One of the methods that I was exploring at the time was [autoencoders](https://en.wikipedia.org/wiki/Autoencoder). Since most of the code in our office is written in Lua, using Torch was the logical choice. At the time, I was still learning how to create a working network architecture, so I did a lot of learning on relevant papers, such as [AEVB](http://arxiv.org/abs/1312.6114) and [AlexNet](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks). I was also looking into tutorials on how to actually write an autoencoder, for example the excellent [blog post](https://swarbrickjones.wordpress.com/2015/04/29/convolutional-autoencoders-in-pythontheanolasagne/) by Mike Swarbrick Jones.
 
-To the best of my knowledge, there are no publicly available examples for writing autoencoders on color images. There are, however, several examples on how to write an autoencoder for the [MNIST](http://yann.lecun.com/exdb/mnist/) dataset. It might be trivial for seasoned machine learning scientists to extend the architecture from grayscale to color images, but for me it was non-trivial. The goal of this post is to provide a minimal example on how to train autoencoders on color images using Torch.
+To the best of my knowledge, there are no publicly available examples for writing autoencoders on color images. There are, however, several examples on how to write an autoencoder for the [MNIST](http://yann.lecun.com/exdb/mnist/) dataset. It might be easy for seasoned machine learning scientists to extend the architecture from grayscale to color images, but for me it was non-trivial. The goal of this post is to provide a minimal example on how to train autoencoders on color images using Torch.
 
 ## The Big Picture
 ![Autoencoder overview](/assets/ae1.jpg "Figure 2: major components of an autoencoder")
+
 Figure 2. shows the major components of an autoencoder. The input in our case is a 2D image, denoted as \\(\mathrm{I}\\), which passes through an encoder block. The purpose of this block is to provide a latent representation of the input, denoted as \\(\mathrm{C}\\), which we will refer to as the code for the remainder of this post. This code is subsequently passed through a decoding block, denoted as \\(\hat{\mathrm{I}}\\), which generates an approximation of the input.
 
 ![Encoder overview](/assets/ae2.jpg "Figure 3: encoder components in this post")
@@ -131,12 +132,60 @@ function autoencoder:initialize()
 end
 ```
 
-We will also add a utility printself() method to the class for debugging:
+## Data Preparation and IO
+For me, I find it easiest to store training data is in a large [LMDB](https://en.wikipedia.org/wiki/Lightning_Memory-Mapped_Database) file. [Caffe](http://caffe.berkeleyvision.org/) provides an excellent [guide](http://caffe.berkeleyvision.org/gathered/examples/imagenet.html) on how to preprocess images into LMDB files. I followed the exact same set of instructions to create the training and validation LMDB files, however, because our autoencoder takes 64\\(\times\\)64 images as input, I set the resize height and width to 64.
+
+Reading data for either training is done through a `lmdb_reader` class which takes a path to a LMDB folder as input for its constructor. For now, ignore the details of this class. What is important is that data is read in batches and returned as `{input, target=input}` pairs.
+
+In the future, I might write a post on how to write the class. But for now, a seasoned developer can easily dissect the reader class and the accompanying protobuf file.
+
+## Training
+Normally, neural networks are trained on large datasets that are orders of magnitude larger than the available CPU/GPU memory. As a result, the network is presented with batches of data during the training in the hopes that by each incremental observation of the input, the distribution of inner layer weights can be accurately approximated. One of the most popular methods for optimizing the value of inner layer weights is the stochastic gradient descent [SGDC](https://en.wikipedia.org/wiki/Stochastic_gradient_descent).
+
+The training script is provided under `/scripts/train.lua`. To run it in the root folder with default parameters, simply call:
 
 ```
-function autoencoder:printself()
-  print(self.net)
+th scripts/train.lua /path/to/imagenet_train_lmdb/
+```
+
+Training our autoencoder is simple using SGDC. First, we need to create an instance of our autoencoder and initialize it:
+
+```
+ae = autoencoder()
+ae:initialize()
+```
+
+Since our data is continuous, we will use the mean-squared error as the loss function for training. We can now set up SGDC optimizer for training. This can easily be done using the following snippet:
+
+```
+criterion = nn.MSECriterion():cuda()
+trainer = nn.StochasticGradient(ae.net, criterion)
+```
+
+To start training, we simply read a data batch and call the `:train()` function on the batch:
+
+```
+for t=1, options.epochs do
+  print('Epoch ' .. t)
+  data_set = imagenet_reader:get_training_data(options.batch_size)
+
+  trainer:train(data_set)
+
 end
 ```
+## Testing and Results
+Once the training is finished, we can pass images from the validation set through the autoencoder in forward mode. If the output matches the input, the autoencoder has been successfully trained. The testing script is provided under `scripts/test.lua`. To run it in the root folder with default parameters simply call:
 
-## Data Preparation
+```
+th scripts/test.lua ./path/to/trained/network.bin /path/to/imagenet_val_lmdb/
+```
+
+Below are some of my results:
+
+![Results, example 1](/assets/ae_results1.png "Figure 5: Autoencoder results, example 1")
+
+![Results, example 2](/assets/ae_results2.png "Figure 6: Autoencoder results, example 2")
+
+![Results, example 3](/assets/ae_results3.png "Figure 7: Autoencoder results, example 3")
+
+As you see, the network can approximate the general properties of its inputs. In Figure 5., the learned representation is blurry compared to the original, however, the network managed to capture the general color of the brown beetle and the surrounding green leafs. In Figure 6., the fishing equipment can be distinguished in the learned representation, however, the network has failed to correctly recover some pixels. These pixels have distorted color values. The same shortcomings are also present in Figure 7.

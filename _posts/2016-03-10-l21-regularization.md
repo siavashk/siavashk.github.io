@@ -9,7 +9,7 @@ A few days ago, I was trying to improve the generalization ability of my neural 
 
 $$\left \| x \right \|_p = \left (\sum^N_{i=1} \left | x_i \right |^p \right )^{1/p}$$
 
-, where \\x\\ belongs to an \\N\\-dimensional vector space and \\i\\ indexes elements from \\x\\. Popular choices for \\p\\ are \\p=1\\ and \\p=2\\. \\p=1\\ results in the L1 norm, which is known to induce sparsity. For \\p=2\\, p-norm translates to the famous Euclidean norm. When L1/L2 regularization is properly used, networks parameters tend to stay small during training.
+, where \\(x\\) belongs to an \\(N\\)-dimensional vector space and \\(i\\) indexes elements from \\(x\\). Popular choices for \\(p\\) are \\(p=1\\) and \\(p=2\\). \\(p=1\\) results in the L1 norm, which is known to induce sparsity. For \\(p=2\\), p-norm translates to the famous Euclidean norm. When L1/L2 regularization is properly used, networks parameters tend to stay small during training.
 
 When I was trying to introduce L1/L2 penalization for my network, I was surprised to see that the stochastic gradient descent (SGDC) optimizer in the Torch nn package does not support regularization out-of-the-box. Thankfully, you can easily add regularization using the callback.
 
@@ -22,7 +22,7 @@ module:updateGradInput(input, criterion:updateGradInput(module.output, target))
 module:accUpdateGradParameters(input, criterion.gradInput, currentLearningRate)
 ```
 
-The first line calculates the loss using the forward pass of the network (`module`) given the input and current network parameters. The second line calculates the gradient of the model with respect to parameters. The third line updates network parameters using the learning rate. In order to add regularization, we need to modify the `currentError` to reflect L1/L2 regularization penalty and also modify the update rule for network parameters. This can be achieved using the following callback function in SGDC:
+The first line calculates the loss using the forward pass of the network (`module`) given the input and current network parameters. The second line calculates the gradient of the model with respect to parameters. The third line updates network parameters using the `currentLearningRate`. In order to add regularization, we need to modify the `currentError` to reflect L1/L2 regularization penalty and also modify the update rule for network parameters. This can be achieved using the following callback function in SGDC:
 
 ```
 if self.hookIteration then
@@ -42,6 +42,7 @@ end
 where `trainer` is an instance of SGDC. We can add our callback to SGDC by overriding the `trainer.hookIteration = callback` function of SGDC. `currentError` is a reference to the trainer `currentError` so updating it also updates current optimizer error.
 
 Now, creating `regularization_penalty` and `regularize_parameters` functions is easy. The first one is not strictly necessary, given that we analytically know how to differentiate L1/L2 norms, but it might be useful to implement them so that we can visualize the total loss during optimization. This can be achieved in the following manner:
+
 ```
 function regularization_penalty(network, l1_weight, l2_weight)
   local parameters, _ = network:parameters()
@@ -52,7 +53,9 @@ function regularization_penalty(network, l1_weight, l2_weight)
   return penalty
 end
 ```
+
 The only ambiguous line might be the iteration over parameters. This is actually not an iteration over individual network parameters, but over network layers, i.e. `i` goes from 1 to number-of-layers. Now, lets' move to updating network parameters:
+
 ```
 function regularize_params(network, l1_weight, l2_weight)
 local parameters, _ = network:parameters()
@@ -63,4 +66,5 @@ local parameters, _ = network:parameters()
   end
 end
 ```
+
 `parameters` is a reference network parameters, so updating it affects the state of the network. The only ambiguous part is the `clamp` function on the parameters to the `l1_weight`. By doing this we are effectively reducing the step size when `parameters` are close to zero, thereby reducing oscillatory movement around the origin.

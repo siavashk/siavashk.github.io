@@ -48,7 +48,7 @@ function regularization_penalty(network, l1_weight, l2_weight)
   local parameters, _ = network:parameters()
   local penalty = 0
   for i=1, table.getn(parameters) do
-    penalty = penalty + l1_weight * parameters[i]:norm(1) + l2_weight * parameters[i]:norm(2)
+    penalty = penalty + l1_weight * parameters[i]:norm(1) + l2_weight * parameters[i]:norm(2) ^ 2
   end
   return penalty
 end
@@ -61,7 +61,7 @@ function regularize_params(network, l1_weight, l2_weight)
 local parameters, _ = network:parameters()
   for i=1, table.getn(parameters) do
     local update = torch.clamp(parameters[i], -l1_weight, l1_weight)
-    update:add(parameters[i]:mul(-options.l2_weight))
+    update:add(parameters[i]:mul(-l2_weight))
     parameters[i]:csub(update)
   end
 end

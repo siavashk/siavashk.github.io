@@ -10,4 +10,4 @@ Before working at Copypants, I was briefly (seven months) a machine learning sci
 
 Before that, I was a MSc student at [Queen's university](http://www.queensu.ca/) in Kingston, ON, Canada.
 
-If you like my website, you can follow me on twitter [@khallagh65](https://twitter.com/khallagh65).
+I also have an [academic](http://www.ece.ubc.ca/~siavashk) website. You can also follow me on twitter [@khallagh65](https://twitter.com/khallagh65).

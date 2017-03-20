@@ -2,6 +2,7 @@
 layout: post
 title: "PyCPD: Tutorial on the Coherent Point Drift Algorithm"
 comments: true
+published: false
 ---
 *If you are only looking for code for the coherent point drift algorithm in Python, look at this [Pypi](https://pypi.python.org/pypi/pycpd/0.1) package. Or if you prefere to build from source, you can look at the following [Github](https://github.com/siavashk/pycpd).
 
@@ -13,5 +14,3 @@ A popular approach for MR-US fusion prostate biopsy is to use a surface-based re
 A related problem to surface-based registraion is point cloud registration. They are some times used interchangeably in the literature. Strictly speaking, surface-based registraion deals with surfaces that have connectivity information (think faces). Point cloud registration, on the other hand deals with, well, clouds of points without connectivity information (think vertices).
 
  A point cloud registration, method that I found particularly useful was the [Coherent Point Drift](https://arxiv.org/abs/0905.2635) (CPD) algorithm by Myronenko and Song. They formulate the registration as a probability density estimation problem, where one point cloud is represented using a Gaussian Mixture Model (GMM) and the other point cloud is observations from said GMM.
-
- 

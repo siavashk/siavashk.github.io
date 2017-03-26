@@ -39,9 +39,9 @@ yLabels = ["Y1", "Y2", "Y3"]
 
 Plotting the two point clouds results in Figure 1. Now, since this is a toy example, we already know the correspondences between points in the two point clouds. The corresponding points are linked using the black dashed line. If the correspondences are known, the solution to the rigid registration is known as the orthogonal Procrustes problem:
 
-$$\\mathrm{argmin}_{R,t}\left\\Vert{X - RY - t}\right\\Vert^2$$
+$$\\mathrm{argmin}_{R,t}\left\\||X - RY - t\right\\||^2, s.t R^TR=I$$
 
-subject to \\(R^TR=I\\) and \\(\\mathrm{det}(R)=1\\).
+<!-- subject to \\(R^TR=I\\) and \\(\\mathrm{det}(R)=1\\). -->
 
 <br>
 ![Point Cloud Registration](../notebooks/coherent-point-drift/registration1_files/registration1_1_0.png)<br/>

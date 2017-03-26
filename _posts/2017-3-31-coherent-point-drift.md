@@ -16,28 +16,29 @@ A related problem to surface-based registration is point cloud registration. The
  A point cloud registration, method that I found particularly useful was the [Coherent Point Drift](https://arxiv.org/abs/0905.2635) (CPD) algorithm by Myronenko and Song. They formulate the registration as a probability density estimation problem, where one point cloud is represented using a Gaussian Mixture Model (GMM) and the other point cloud is observations from said GMM.
 
  ## Point Cloud Registration
- Let's start off with a simple toy example. Assume that we have two point clouds \\(X = \{X1, X2, X3\}\\) and \\(Y=\{Y1, Y2, Y3\}\\). These point clouds are shown in Figure 1 with red and blue circles, respectively. Our goal is to find the transformation that best aligns the two point clouds.
+ Let's start off with a simple toy example. Assume that we have two point clouds \\(X = \left\{X1, X2, X3\right\}\\) and \\(Y=\left\{Y1, Y2, Y3\right\}\\). These point clouds are shown in Figure 1 with red and blue circles, respectively. Our goal is to find the transformation that best aligns the two point clouds.
 
-In this toy example, the unknown transformation is a rotation around the origin (parameterized by \\(\theta\\)) followed by a translation (parameterized by \\(t\\)).Assume, the actual value of the unknown parameters is \\(\{theta=30^\circ, t=(0.2, 0.2)\}\\). We can use numpy to define the two point clouds as seen in the following code snippet:
+In this toy example, the unknown transformation is a rotation around the origin (parameterized by \\(\theta\\)) followed by a translation (parameterized by \\(t\\)).Assume, the actual value of the unknown parameters is \\(\left\{\theta=30^\circ, t=(0.2, 0.2)\right\{\\). We can use numpy to define the two point clouds as seen in the following code snippet:
 
  ```python
- import matplotlib.pyplot as plt
- import numpy as np
+import numpy as np
 
- theta = np.pi/6.0
- t = np.array([[0.2], [0.2]])
+theta = np.pi/6.0
+t = np.array([[0.2], [0.2]])
 
- R = np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]]) # rotation matrix
- X = np.array([[0, 0, 1], [0, 1, 0]])
- Y = np.dot(R, X) + t
+# rotation matrix
+R = np.array([[np.cos(theta), -np.sin(theta)],
+              [np.sin(theta), np.cos(theta)]])
+X = np.array([[0, 0, 1], [0, 1, 0]])
+Y = np.dot(R, X) + t
 
- xLabels = ["X1", "X2", "X3"]
- yLabels = ["Y1", "Y2", "Y3"]
- ```
+xLabels = ["X1", "X2", "X3"]
+yLabels = ["Y1", "Y2", "Y3"]
+```
 
 Plotting the two point clouds results in Figure 1. Now, since this is a toy example, we already know the correspondences between points in the two point clouds. The corresponding points are linked using the black dashed line. If the correspondences are known, the solution to the rigid registration is known as the orthogonal Procrustes problem:
 
-\\(\argmin_{R,t}\left\|X - RY - t\right\|^2\\) subject to \\(R^TR=I\\) and \\(\mathrm{det}(R)=1\\).
+\\(\mathrm{argmin}_{R,t}\left\||X - RY - t\right\||^2\\) subject to \\(R^TR=I\\) and \\(\mathrm{det}(R)=1\\).
 
 <br>
 ![Point Cloud Registration](../notebooks/coherent-point-drift/registration1_files/registration1_1_0.png)<br/>
@@ -47,7 +48,7 @@ When correspondence is not explicitly known, point cloud registration algorithms
 
 We can assign an arbitrary correspondence probability to point clouds based on proximity. Figure 2 shows an example probability distribution based on proximity.
 
-Points that are closer than a radius of \\(r=0.2\\) would confident matches, and we would assign a correspondence confidence of \\(p=1.0\\) to them. Pairs such as \\((X1, Y1)\\ and \\((X2, Y2\\) pairs have a distance between \\(r=0.2\\) and \\(r=0.4\\) units are probable but not confident matches, so we could assign a probability of \\(p=0.5\\) to them. Beyond this, there is probably no correspondence, so our probability would drop to zero.
+Points that are closer than a radius of \\(r=0.2\\) would confident matches, and we would assign a correspondence confidence of \\(p=1.0\\) to them. Pairs such as \\(\left\(X1, Y1\right\)\\) and \\(\left\(X2, Y2\right\)\\) pairs have a distance between \\(r=0.2\\) and \\(r=0.4\\) units are probable but not confident matches, so we could assign a probability of \\(p=0.5\\) to them. Beyond this, there is probably no correspondence, so our probability would drop to zero.
 
 Even though this approach is quite simple, it provides two distinct advantages. First, it allows us to assign correspondences so that we can solve the registration as a Procrustes problem. Furthermore, it also allows us to weigh the loss functional in the Procrustes problem according to the correspondence probability.
 <br>

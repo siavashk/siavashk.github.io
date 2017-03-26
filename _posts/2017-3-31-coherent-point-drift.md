@@ -16,7 +16,7 @@ A related problem to surface-based registration is point cloud registration. The
 A point cloud registration, method that I found particularly useful was the [Coherent Point Drift](https://arxiv.org/abs/0905.2635) (CPD) algorithm by Myronenko and Song. They formulate the registration as a probability density estimation problem, where one point cloud is represented using a Gaussian Mixture Model (GMM) and the other point cloud is observations from said GMM.
 
 ## Point
-Let's start off with a simple toy example. Assume that we have two point clouds \\(X = \left\{ X1, X2, X3 \} \\) and \\(Y = \{ Y1, Y2, Y3 \} \\). These point clouds are shown in Figure 1 with red and blue circles, respectively. Our goal is to find the transformation that best aligns the two point clouds.
+Let's start off with a simple toy example. Assume that we have two point clouds \\(X = \left\\{ X1, X2, X3 \right\\} \\) and \\(Y = \{ Y1, Y2, Y3 \} \\). These point clouds are shown in Figure 1 with red and blue circles, respectively. Our goal is to find the transformation that best aligns the two point clouds.
 
 In this toy example, the unknown transformation is a rotation around the origin (parameterized by \\(\theta\\)) followed by a translation (parameterized by \\(t\\)).Assume, the actual value of the unknown parameters is \\( \{ \theta=30^\circ, t=(0.2, 0.2) \} \\). We can use numpy to define the two point clouds as seen in the following code snippet:
 

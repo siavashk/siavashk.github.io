@@ -1,2 +1,2 @@
-notebooks/*.md
-notebooks/.ipynb_checkpoints/*
+notebooks/coherent-point-drift/*.md
+notebooks/coherent-point-drift/.ipynb_checkpoints/*

@@ -2,7 +2,7 @@
 layout: post
 title: "PyCPD: Tutorial on the Coherent Point Drift Algorithm"
 comments: true
-published: true
+published: false
 ---
 *If you are only looking for code for the coherent point drift algorithm in Python, look at this [Pypi](https://pypi.python.org/pypi/pycpd/0.1) package. Or if you prefere to build from source, you can look at the following [Github](https://github.com/siavashk/pycpd).*
 

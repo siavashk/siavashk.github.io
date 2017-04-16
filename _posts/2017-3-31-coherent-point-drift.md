@@ -58,3 +58,44 @@ Even though this approach is quite simple, it provides two distinct advantages. 
 ![Point Cloud Correspondences](../notebooks/coherent-point-drift/registration1_files/registration1_2_0.png)<br/>
 
 ## Gaussian Mixture Models
+We will now side step from the point cloud registration problem briefly. Instead of dealing with \\(X, Y\\) point clouds directly, we construct a GMM from the moving point cloud, \\(Y\\), and treat \\(X\\) as observations from that GMM. In Figure 3, we have constructed a GMM where the three Gaussians have a variance of 0.75 units. Blue points, i.e. Gaussian centroids, are the transformed moving points (\\(Y\\)). Red points, i.e. the fixed point cloud \\(X\\), are observations from this GMM. Isocontours represent the log-likelihood that red points are sampled from this GMM.
+
+<br>
+![Constructed GMM](../notebooks/coherent-point-drift/registration1_files/registration1_3_0.png)<br/>
+
+## GMM-based Registration
+In order to perform registration, we have to solve correspondence and moving point cloud transformation problems simultaneously. This is done through expectation-maximization (EM) optimization. To solve the correspondence problem, we need to find which Gaussian the observed point cloud was sampled from (E-step). This provides us with correspondence probability, similar to Figure 2. Once correspondences probabilities are known, we maximize the negative log-likelihood that the observed points were sampled from the GMM with respect to transformation parameters (M-step).
+
+## E-step
+In Figure 3, if there was only one Gaussian component in the mixture, then the probability that a point \\(x\\) is sampled from this Gaussian is given using probability density distribution of the [multivairate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution#Density_function). For the 2D case, with isotropic Gaussians, this simplifies to:
+
+$$p(x) = \frac{1}{{2\pi}\sigma^2}\exp{-\frac{\left\Vert{X - RY - t}\right\Vert^2}{2\sigma^4}}$$
+
+However, since we are dealing with multiple Gaussians, we need to normalize this probability by the contribution of all Gaussian centroids. In the pycpd package, this is achieved (minor tweaks to simplify the explanation) using the following snippet:
+
+```python
+import numpy as np
+def EStep(X, Y, sigma2):
+  M = Y.shape[0] # number of moving points
+  D = Y.shape[1] # dimensionality of moving points
+  N = X.shape[0] # number of fixed points
+  # Probability matrix: p_{ij} is the probability
+  # that moving point i corresponds to fixed point j
+  P = np.zeros((M, N))
+
+  for i in range(0, M):
+      diff     = X - np.tile(Y[i, :], (N, 1))
+      diff    = np.multiply(diff, diff)
+      P[i, :] = P[i, :] + np.sum(diff, axis=1)
+
+  P = np.exp(-P / (2 * sigma2))
+  den = np.sum(P, axis=0)
+  den = np.tile(den, (M, 1))
+  den[den==0] = np.finfo(float).eps
+
+  P = np.divide(P, den)
+  return P
+```
+
+## M-step
+Once correspondence probabilities are known, i.e. \\(P\\), we can solve for the 

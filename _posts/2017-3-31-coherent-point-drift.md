@@ -2,7 +2,7 @@
 layout: post
 title: "PyCPD: Tutorial on the Coherent Point Drift Algorithm"
 comments: true
-published: false
+published: true
 ---
 *If you are only looking for code for the coherent point drift algorithm in Python, look at this [Pypi](https://pypi.python.org/pypi/pycpd/0.1) package. Or if you prefer to build from source, you can look at the following [Github](https://github.com/siavashk/pycpd).*
 
@@ -41,9 +41,6 @@ Plotting the two point clouds results in Figure 1. Now, since this is a toy exam
 
 $$\mathrm{argmin}_{R,t}\left\Vert{X - RY - t}\right\Vert^2, \mathrm{s.t} R^TR=I$$
 
-<!-- subject to \\(R^TR=I\\) and \\(\\mathrm{det}(R)=1\\). -->
-
-<br>
 ![Point Cloud Registration](../notebooks/coherent-point-drift/registration1_files/registration1_1_0.png)<br/>
 
 ## Missing Correspondences
@@ -75,6 +72,7 @@ However, since we are dealing with multiple Gaussians, we need to normalize this
 
 ```python
 import numpy as np
+
 def EStep(X, Y, sigma2):
   M = Y.shape[0] # number of moving points
   D = Y.shape[1] # dimensionality of moving points
@@ -94,8 +92,46 @@ def EStep(X, Y, sigma2):
   den[den==0] = np.finfo(float).eps
 
   P = np.divide(P, den)
-  return P
+  Pt1 = np.sum(P, axis=0)
+  P1  = np.sum(P, axis=1)
+  Np  = np.sum(P1)
+  return P, Pt1, P1, Np
 ```
 
 ## M-step
-Once correspondence probabilities are known, i.e. \\(P\\), we can solve for the 
+Once correspondence probabilities are known, i.e. \\(P\\), we can solve for the transformation parameters. In the case of rigid registration, these transform parameters are the rotation matrix and the translation vector. In the pycpd package, this is achieved using the following snippet:
+
+```python
+import numpy as np
+
+def MStep(X, Y, P):
+  updateTransform(X, Y, P, P1, Np)
+
+def updateTransform(X, Y, P):
+  muX = np.divide(np.sum(np.dot(P, X), axis=0), Np)
+  muY = np.divide(np.sum(np.dot(np.transpose(P), Y), axis=0), Np)
+
+  XX = X - np.tile(muX, (N, 1))
+  YY = Y - np.tile(muY, (M, 1))
+
+  A = np.dot(np.transpose(XX), np.transpose(P))
+  A = np.dot(A, YY)
+
+  U, _, V = np.linalg.svd(A, full_matrices=True)
+  C = np.ones((D, ))
+  C[D-1] = np.linalg.det(np.dot(U, V))
+
+  R = np.dot(np.dot(U, np.diag(C)), V)
+
+  YPY = np.dot(np.transpose(P1), np.sum(np.multiply(YY, YY), axis=1))
+
+  s = np.trace(np.dot(np.transpose(A), R)) / YPY
+
+  t = np.transpose(muX) - s * np.dot(R, np.transpose(muY))
+  return s, R, t, A, XX
+
+def updateVariance(R, A, XX, Np, D):
+  trAR = np.trace(np.dot(A, np.transpose(R)))
+  xPx = np.dot(np.transpose(Pt1), np.sum(np.multiply(XX, XX), axis =1))
+  sigma2 = (xPx - s * trAR) / (Np * D)
+```

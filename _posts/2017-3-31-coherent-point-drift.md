@@ -105,7 +105,8 @@ Once correspondence probabilities are known, i.e. \\(P\\), we can solve for the 
 import numpy as np
 
 def MStep(X, Y, P):
-  updateTransform(X, Y, P, P1, Np)
+  s, R, t, A, XX = updateTransform(X, Y, P, P1, Np)
+  sigma2 = updateVariance(R, A, XX, Np, D)
 
 def updateTransform(X, Y, P):
   muX = np.divide(np.sum(np.dot(P, X), axis=0), Np)
@@ -134,4 +135,5 @@ def updateVariance(R, A, XX, Np, D):
   trAR = np.trace(np.dot(A, np.transpose(R)))
   xPx = np.dot(np.transpose(Pt1), np.sum(np.multiply(XX, XX), axis =1))
   sigma2 = (xPx - s * trAR) / (Np * D)
+  return sigma2
 ```

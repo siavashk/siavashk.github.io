@@ -66,7 +66,7 @@ In order to perform registration, we have to solve correspondence and moving poi
 ## E-step
 In Figure 3, if there was only one Gaussian component in the mixture, then the probability that a point \\(x\\) is sampled from this Gaussian is given using probability density distribution of the [multivairate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution#Density_function). For the 2D case, with isotropic Gaussians, this simplifies to:
 
-$$p(x) = \frac{1}{2\pi\sigma^2}\exp{-\frac{\left\Vert{X - RY - t}\right\Vert^2}{2\sigma^4}}$$
+$$p(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp{-\frac{\left\Vert{X - RY - t}\right\Vert^2}{2\sigma^2}}$$
 
 However, since we are dealing with multiple Gaussians, we need to normalize this probability by the contribution of all Gaussian centroids. In the pycpd package, this is achieved (minor tweaks to simplify the explanation) using the following snippet:
 

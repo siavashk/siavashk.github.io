@@ -41,7 +41,7 @@ Plotting the two point clouds results in Figure 1. Now, since this is a toy exam
 
 $$\mathrm{argmin}_{R,t}\left\Vert{X - RY - t}\right\Vert^2, \quad \mathrm{s.t} \quad R^TR=I$$
 
-![Point Cloud Registration](../notebooks/coherent-point-drift/registration1_files/registration1_1_0.png)<br/>
+![Point Cloud Registration](/assets/coherent-point-drift/registration1_files/registration1_1_0.png)<br/>
 
 ## Missing Correspondences
 When correspondence is not explicitly known, point cloud registration algorithms implicitly assume that correspondence can be inferred through point proximity. In other words, points that are spatially close to each other correspond to one another.
@@ -52,13 +52,13 @@ Points that are closer than a radius of \\(r=0.2\\) would confident matches, and
 
 Even though this approach is quite simple, it provides two distinct advantages. First, it allows us to assign correspondences so that we can solve the registration as a Procrustes problem. Furthermore, it also allows us to weigh the loss functional according to the correspondence probability.
 <br>
-![Point Cloud Correspondences](../notebooks/coherent-point-drift/registration1_files/registration1_2_0.png)<br/>
+![Point Cloud Correspondences](/assets/coherent-point-drift/registration1_files/registration1_2_0.png)<br/>
 
 ## Gaussian Mixture Models
 We will now side step from the point cloud registration problem briefly. Instead of dealing with \\(X, Y\\) point clouds directly, we construct a GMM from the moving point cloud, \\(Y\\), and treat \\(X\\) as observations from that GMM. In Figure 3, we have constructed a GMM where the three Gaussians have a variance of 0.75 units. Blue points, i.e. Gaussian centroids, are the transformed moving points (\\(Y\\)). Red points, i.e. the fixed point cloud \\(X\\), are observations from this GMM. Isocontours represent the log-likelihood that red points are sampled from this GMM.
 
 <br>
-![Constructed GMM](../notebooks/coherent-point-drift/registration1_files/registration1_3_0.png)<br/>
+![Constructed GMM](/assets/coherent-point-drift/registration1_files/registration1_3_0.png)<br/>
 
 ## GMM-based Registration
 In order to perform registration, we have to solve correspondence and moving point cloud transformation problems simultaneously. This is done through expectation-maximization (EM) optimization. To solve the correspondence problem, we need to find which Gaussian the observed point cloud was sampled from (E-step). This provides us with correspondence probability, similar to Figure 2. Once correspondences probabilities are known, we maximize the negative log-likelihood that the observed points were sampled from the GMM with respect to transformation parameters (M-step).

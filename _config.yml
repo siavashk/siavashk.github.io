@@ -19,7 +19,8 @@ sass:
   style:            :compressed
 
 pages_list:
-  About: '/about/'
+  About: '/about'
+  Archive: '/archive'
 
 # About/contact
 author:

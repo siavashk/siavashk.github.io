@@ -30,7 +30,7 @@ t = np.array([[0.2], [0.2]])
 # rotation matrix
 R = np.array([[np.cos(theta), -np.sin(theta)],
               [np.sin(theta), np.cos(theta)]])
-X = np.array([[0, 0, 1], [0, 1, 0]])
+X = np.array([[0, 0, 10], [0, 10, 0]])
 Y = np.dot(R, X) + t
 
 xLabels = ["X1", "X2", "X3"]

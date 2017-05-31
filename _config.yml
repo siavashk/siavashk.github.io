@@ -8,8 +8,7 @@ tagline:             Machine Learning, Computer Vision, Data Sciences
 url:                 http://ece.ubc.ca/~siavashk
 paginate:            1
 baseurl:             ""
-
-pygments:            true
+highlighter:         rouge
 
 # Assets
 #

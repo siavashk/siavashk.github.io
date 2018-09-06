@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Is getting a PhD worth it?"
+title: "Is Getting a PhD Worth It?"
 comments: true
 ---
 ## Introduction

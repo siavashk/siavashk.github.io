@@ -1,8 +1,9 @@
-# Projects
-# uncomment the urls if you wish to display them, and add your own URL
-
 - project: PyCPD
-  role: One man development team
   duration: October 2016 &mdash; Present
   url: "https://github.com/siavashk/pycpd"
-  description: PyCPD is a pure numpy implementation of the coherent point drift (CPD) algorithm. I developed it as part of my invited talk at the University of British Columbia. While preparing my <a href="http://www.ece.ubc.ca/~siavashk/teaching/UBC_October_2016/presentation1.pdf">notes</a>, I realized that most CPD implementations of CPD were bloated and not easy to install, so I developed PyCPD.
+  description: PyCPD is a pure numpy implementation of the coherent point drift (CPD) algorithm. I developed it as part of my <a href="http://www.ece.ubc.ca/~siavashk/teaching/UBC_October_2016/presentation1.pdf">invited talk</a> at the University of British Columbia.
+
+- project: GMM-FEM
+  duration: January 2014 &mdash; October 2016
+  url: "https://github.com/siavashk/GMM-FEM"
+  description: GMM-FEM is a point cloud registration technique that I developed as part of my PhD thesis. It is implemented in Matlab, with computationally intensive parts being developed in C++.

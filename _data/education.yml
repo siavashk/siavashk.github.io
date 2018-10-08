@@ -1,0 +1,14 @@
+# Degree
+- degree: PhD, Electrical and Computer Engineering
+  uni: University of British Columbia
+  year: 2010 &mdash; 2015
+  summary: I was doing research on image-based techniques for prostate interventions. As part of my PhD, I wrote a clinical software to collect B-mode, RF time-series and elastography images during a prostate biopsy. Using this dataset, I developed image registration methods to compensate for motion and deformations during prostate biopsies. I was also involved in machine learning projects for detection of tumors in ultrasound data. My <a href="https://scholar.google.ca/citations?user=hORLB0sAAAAJ&hl=en">Google Scholar</a> includes a list of published papers from my PhD.
+
+- degree: MSc, Electrical and Computer Engineering
+  uni: University of British Columbia
+  year: 2008 &mdash; 2010
+  summary: My thesis was on image registration methods for spinal interventions. I developed a generative model for spinal anatomy and by fitting and overlaying it on ultrasound images, showed that it could be used to interpret ultrasound images during spinal injections.
+
+- degree: BSc, Electrical Engineering
+  uni: Amirkabir University of Technology
+  year: 2004 &mdash; 2008

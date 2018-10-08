@@ -1,2 +1,5 @@
 notebooks/coherent-point-drift/*.md
 notebooks/coherent-point-drift/.ipynb_checkpoints/*
+new.siavashk.github.io/*
+Gemfile.lock
+_site/*

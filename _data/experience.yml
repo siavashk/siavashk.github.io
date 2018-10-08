@@ -1,0 +1,9 @@
+- company: <a href="https://clarius.com">Clarius Mobile Health</a>
+  position: Research Engineer
+  duration: March, 2017 &mdash; Present
+  summary: At my current role, I translate business challenges in the ultrasound domain to a scientific problem. After prototyping an algorithm, I implement the solution as part of our application. I also help out with software development tickets. Below are some of my projects&#58; <ul class="resume-item-list"><li><a href="https://www.clarius.me/want-test-drive-clarius/">Virtual demo probe</a> (patent pending).</li><li>Automatic follicle/bladder segmentation.</li>
+
+- company: Copypants Creator Technologies
+  position: Machine Learning Scientist
+  duration: November 2015 &mdash; March 2017
+  summary: I designed and implemented a machine learning framework for an image search service. The company and technology was later acquired by <a href="https://www.xperi.com">Xperi</a>. Below are some of my projects&#58; <ul class="resume-item-list"><li>Implemented a convolutional neural network for featuren extraction and image matching.</li><li>Implemented a reinforcement learning agent for matching patches in images.</li>

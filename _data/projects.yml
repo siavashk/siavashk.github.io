@@ -3,6 +3,11 @@
   url: "https://github.com/siavashk/pycpd"
   description: PyCPD is a pure numpy implementation of the coherent point drift (CPD) algorithm. I developed it as part of my <a href="http://www.ece.ubc.ca/~siavashk/teaching/UBC_October_2016/presentation1.pdf">invited talk</a> at the University of British Columbia.
 
+- project: Gym-MNIST-Pair
+  duration: November 2017 &mdash; December 2017
+  url: "https://github.com/siavashk/gym-mnist-pair"
+  description: This is a gym environment for training a reinforcement learning to find matching patches in two identical translated MNIST pairs. The environment consists of a pair of mnist digits against a zero background. The dimension of each image is 40-by-40, mnist digits are standard 28-by-28 pixels. The location of each mnist digit is uniformly random and independent.
+
 - project: GMM-FEM
   duration: January 2014 &mdash; October 2016
   url: "https://github.com/siavashk/GMM-FEM"

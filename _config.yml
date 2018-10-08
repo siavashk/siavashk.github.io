@@ -24,7 +24,7 @@ resume_contact_address:         "Clarius Mobile Health, 3605 Gilmore Way, Burnab
 resume_header_contact_info:     "Clarius Mobile Health, 3605 Gilmore Way, Burnaby • khallagh65@gmail.com"
 display_header_contact_info:    "false"
 
-resume_header_intro: "<p>I provide machine learning and image processing solutions for medical and computer vision challenges. I graduated from a PhD prgram at the Univeristy of British Columbia. As part of my thesis, I developed image registration techniques for prostate interventions. Since graduation, I have worked as machine learning scientist at various start-up companies.</p>"
+resume_header_intro: "<p>I provide machine learning and image processing solutions for medical and computer vision challenges. I graduated from a PhD prgram at the Univeristy of British Columbia. As part of my thesis, I developed image registration techniques for prostate interventions. Since graduation, I have worked as a machine learning scientist at various start-up companies.</p>"
 
 # use "yes" to display the email contact button,
 # "no" to display an "I'm not looking for work" message,

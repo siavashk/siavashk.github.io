@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<a class="back" href='{{site.url}}'></a>
 
   {% include resume_head.html %}
 
@@ -46,6 +47,19 @@
         {% endif %}
 
       </header>
+
+      {% if site.resume_section_skills %}
+      <!-- begin Skills -->
+      <section class="content-section">
+
+        <header class="section-header">
+          <h2>Skills</h2>
+        </header>
+        {% include skills.html %}
+
+      </section>
+      <!-- end Skills -->
+      {% endif %}
 
       {% if site.resume_section_experience %}
       <!-- begin Experience -->
@@ -114,40 +128,6 @@
 
       </section>
       <!-- end Projects -->
-      {% endif %}
-
-      {% if site.resume_section_skills %}
-      <!-- begin Skills -->
-      <section class="content-section">
-
-        <header class="section-header">
-          <h2>Programming Skills</h2>
-        </header>
-        {% for skill in site.data.skills %}
-        <div class="resume-item">
-          <h4 class="resume-item-details">{{ skill.skill }}</h4>
-          <p class="resume-item-copy">{{ skill.description }}</p>
-        </div>
-        {% endfor %}
-
-      </section>
-      <!-- end Skills -->
-      {% endif %}
-
-      {% if site.resume_print_social_links %}
-      <!-- begin Print Social Links -->
-      <section class="content-section print-only">
-
-        <header class="section-header">
-          <h2>Social Links</h2>
-        </header>
-
-        <div class="resume-item">
-        {% include print-social-links.html %}
-        </div>
-
-      </section>
-      <!-- end Print Social Links -->
       {% endif %}
 
     </div>

@@ -3,3 +3,4 @@ notebooks/coherent-point-drift/.ipynb_checkpoints/*
 new.siavashk.github.io/*
 Gemfile.lock
 _site/*
+.DS_Store

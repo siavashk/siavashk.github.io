@@ -6,6 +6,7 @@ markdown:            kramdown
 title:               Siavash Khallaghi
 tagline:             Machine Learning, Computer Vision, Data Sciences
 url:                 http://ece.ubc.ca/~siavashk
+baseurl:             ""
 paginate:            1
 baseurl:             ""
 highlighter:         rouge

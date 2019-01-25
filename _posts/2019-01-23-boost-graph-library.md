@@ -87,7 +87,7 @@ DirectedGraphType makeDirectedGraphWithCycles()
 }
 ```
 
-## Finding Shortest Path in Directed Graphs
+## Finding Shortest Paths in Directed Graphs
 Assume that we are interested in traveling from city **a** to **d** and are given distances in the form of Figure 3. As you probably already know, we can use Djikstra's algorithm to find the shortest path between these two cities. If you are not familiar with this algorithm, I suggest reading through [Erik's](http://vasir.net/blog/game_development/dijkstras_algorithm_shortest_path) excellent blog post.
 
 BGL has a very efficient implementation of Djikstra's algorithm. Using the above definitions, we can wrap the algorithm using the following functions:

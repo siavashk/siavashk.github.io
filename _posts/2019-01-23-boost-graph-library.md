@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Djikstra's Algorithm in BGL"
+title: "Dijkstra's Algorithm in BGL"
 comments: true
 ---
 ## Introduction
@@ -88,9 +88,9 @@ DirectedGraphType makeDirectedGraphWithCycles()
 ```
 
 ## Finding Shortest Paths in Directed Graphs
-Assume that we are interested in traveling from city **a** to **d** and are given distances in the form of Figure 3. As you probably already know, we can use Djikstra's algorithm to find the shortest path between these two cities. If you are not familiar with this algorithm, I suggest reading through [Erik's](http://vasir.net/blog/game_development/dijkstras_algorithm_shortest_path) excellent blog post.
+Assume that we are interested in traveling from city **a** to **d** and are given distances in the form of Figure 3. As you probably already know, we can use Dijkstra's algorithm to find the shortest path between these two cities. If you are not familiar with this algorithm, I suggest reading through [Erik's](http://vasir.net/blog/game_development/dijkstras_algorithm_shortest_path) excellent blog post.
 
-BGL has a very efficient implementation of Djikstra's algorithm. Using the above definitions, we can wrap the algorithm using the following functions:
+BGL has a very efficient implementation of Dijkstra's algorithm. Using the above definitions, we can wrap the algorithm using the following functions:
 
 ```cpp
 std::vector<VertexDescriptor> djikstra(
@@ -164,6 +164,6 @@ DirectedGraphType markPathAlongGraph(
 Writing the marked graph using [Graphviz](https://www.graphviz.org/) allows us to visualize the shortest path along the graph from **a** to **d** as seen Figure 4:
 
 <figure>
-<img alt="Figure 4: Djikstra's Algorithm" src="/assets/djikstra/djikstra.svg" style="width:100%">
-<figcaption>Figure 4: Red edges denote the shortest path between <b>a</b> and <b>d</b> using Djikstra's algorithm.</figcaption>
+<img alt="Figure 4: Dijkstra's Algorithm" src="/assets/djikstra/djikstra.svg" style="width:100%">
+<figcaption>Figure 4: Red edges denote the shortest path between <b>a</b> and <b>d</b> using Dijkstra's algorithm.</figcaption>
 </figure>

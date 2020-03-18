@@ -11,10 +11,10 @@ Don't:
 x = ['a', 'a', 'b', 'c', 'd', 'c', 'a']
 count = {}
 for e in x:
-    if x[i] not in count.keys():
-        count[x[i]] = 0
+    if e not in count.keys():
+        count[e] = 0
     else:
-        count[x[i]] += 1
+        count[e] += 1
 ```
 
 Do:
@@ -22,5 +22,5 @@ Do:
 x = ['a', 'a', 'b', 'c', 'd', 'c', 'a']
 count = {}
 for e in x:
-    count[x[i]] = count.get(e, 0) + 1
+    count[e] = count.get(e, 0) + 1
 ```

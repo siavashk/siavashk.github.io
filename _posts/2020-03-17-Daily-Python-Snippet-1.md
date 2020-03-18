@@ -12,7 +12,7 @@ x = ['a', 'a', 'b', 'c', 'd', 'c', 'a']
 count = {}
 for e in x:
     if e not in count.keys():
-        count[e] = 0
+        count[e] = 1
     else:
         count[e] += 1
 ```

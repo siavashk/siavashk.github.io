@@ -8,19 +8,19 @@ comments: true
 ## Counting Elements in a List
 Don't:
 ```python
-    x = ['a', 'a', 'b', 'c', 'd', 'c', 'a']
-    count = {}
-    for e in x:
-        if x[i] not in count.keys():
-            count[x[i]] = 0
-        else:
-            count[x[i]] += 1
+x = ['a', 'a', 'b', 'c', 'd', 'c', 'a']
+count = {}
+for e in x:
+    if x[i] not in count.keys():
+        count[x[i]] = 0
+    else:
+        count[x[i]] += 1
 ```
 
 Do:
 ```python
-    x = ['a', 'a', 'b', 'c', 'd', 'c', 'a']
-    count = {}
-    for e in x:
-        count[x[i]] = count.get(e, 0) + 1
+x = ['a', 'a', 'b', 'c', 'd', 'c', 'a']
+count = {}
+for e in x:
+    count[x[i]] = count.get(e, 0) + 1
 ```

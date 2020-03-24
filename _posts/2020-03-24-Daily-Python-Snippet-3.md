@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Daily Python Snippet 2"
+title: "Daily Python Snippet 3"
 comments: true
 ---
 *(De)Serializing binary trees is not special to python but I find it interesting.*

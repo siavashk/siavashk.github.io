@@ -6,7 +6,7 @@ comments: true
 *I find these Python snippets more pythonic than their alternative.*
 
 ## Counting Elements in a List
-Don't:
+Good:
 ```python
 x = ['a', 'a', 'b', 'c', 'd', 'c', 'a']
 count = {}
@@ -17,10 +17,18 @@ for e in x:
         count[e] += 1
 ```
 
-Do:
+Better:
 ```python
 x = ['a', 'a', 'b', 'c', 'd', 'c', 'a']
 count = {}
 for e in x:
     count[e] = count.get(e, 0) + 1
+```
+
+Best:
+```python
+from collections import Counter
+
+x = ['a', 'a', 'b', 'c', 'd', 'c', 'a']
+count = Counter(x)
 ```
